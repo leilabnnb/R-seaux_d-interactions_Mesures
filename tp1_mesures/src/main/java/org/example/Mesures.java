@@ -7,6 +7,7 @@ import org.graphstream.stream.file.FileSource;
 import org.graphstream.stream.file.FileSourceEdge;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Mesures {
     public static void main(String[] args) {
@@ -34,11 +35,6 @@ public class Mesures {
                             "Degré moyen " + avgDegree + "\n"+
                             "Coefficient de clustering " + clusteringCoeffG + "\n"
         );
-
-        // générer un graphe aléatoire
-        Graph gAlea = new DefaultGraph("gAlea");
-        Generators.randomNetwork(gAlea, order, avgDegree);
-
 
 
 
