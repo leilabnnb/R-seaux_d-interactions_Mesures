@@ -20,10 +20,11 @@ $` C_{i} = \frac{\lt k\gt}{N}`$
 
    - On a pu vérifier que le réseau est connexe en utilisant la méthode `isConnected`.
    
-   - Un réseau aléatoire est connexe si le degré moyen respecte la condition suivante : $` \lt k\gt \geqslant \ln \left( N \right)`$
+   - Un réseau aléatoire est connexe si le degré moyen respecte la condition suivante : $`\frac{\lt k\gt} {\ln \left( N \right)} \gt   1  `$
    
    La méthode `randIsConnexe` permettant de vérifier si la propriété citée précédemment est serait vérifiée si le réseau était aléatoire.
 
+   - Un réseau aléatoire de même taille devient connexe si le degré moyen est supérieur à 12.666909386951092  
 
    
 

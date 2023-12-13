@@ -7,7 +7,7 @@ import org.graphstream.stream.file.FileSource;
 import org.graphstream.stream.file.FileSourceEdge;
 
 import java.io.IOException;
-import java.util.Arrays;
+
 
 public class Mesures {
 
@@ -51,14 +51,16 @@ public class Mesures {
 
         // Le réseau est-il connexe
         if(Toolkit.isConnected(g))
-            System.out.println("Le graphe est connexe");
+            System.out.println("Le réseau est connexe");
         else
-            System.out.println("Le graphe n'est pas connexe");
+            System.out.println("Le réseau n'est pas connexe");
 
         // Un réseau al&atoire de même degré moyen et taille serait-il connexe?
-        if (randIsConnexe(g)) System.out.println("Le graphe aléatoire de même degré moyen et avec le même nombre de noeuds est connexe.");
-        else System.out.println("Le graphe aléatoire de même degré moyen et avec le même nombre de noeuds n'est pas connexe.");
+        if (randIsConnexe(g)) System.out.println("Le réseau aléatoire de même degré moyen et avec le même nombre de noeuds est connexe.");
+        else System.out.println("Le réseau aléatoire de même degré moyen et avec le même nombre de noeuds n'est pas connexe.");
 
+        // A partir de quel degré moyen un réseau aléatoire de même taille serait connexe
+        System.out.println("Le degré moyen pour qu'un réseau aléatoire de taille " + order + " soit connexe doit être supérieur à " +Math.log(order));
 
 
 
