@@ -8,18 +8,24 @@ GraphStream permet de mesurer de nombreuses caractéristiques d'un réseau. La p
 
 1. Commencez par télécharger les données et les lire avec GraphStream. GraphStream sait lire ce format. Voir [`FileSourceEdge`](https://data.graphstream-project.org/api/gs-core/current/org/graphstream/stream/file/FileSourceEdge.html) et ce [tutoriel](http://graphstream-project.org/doc/Tutorials/Reading-files-using-FileSource/). Vous pouvez essayer de visualiser le graphe mais pour cette taille ça sera très lent et très peu parlant.
 
-   **DONE**
 
 2. Prenez quelques mesures de base : nombre de nœuds et de liens, degré moyen, coefficient de clustering. Quel sera le coefficient de clustering pour un réseau aléatoire de la même taille et du même degré moyen ?
 
 Le coefficient de clustering pour un nœud *i* dans un réseau aléatoire est donné par la formule
 $` C_{i} = \frac{\lt k\gt}{N}`$
 
-   **DONE**
 
-3. Le réseau est-il connexe ? Un réseau aléatoire de la même taille et degré moyen sera-t-il connexe ? À partir de quel degré moyen un réseau aléatoire avec cette taille devient connexe ?
 
-   **TODO**
+3. Le réseau est-il connexe ? Un réseau aléatoire de la même taille et degré moyen sera-t-il connexe ? À partir de quel degré moyen un réseau aléatoire avec cette taille devient connexe ? 
+
+   - On a pu vérifier que le réseau est connexe en utilisant la méthode `isConnected`.
+   
+   - Un réseau aléatoire est connexe si le degré moyen respecte la condition suivante :  
+   $$` \lt k\gt \geqslant \ln \left( N \right)`$$
+   
+   La méthode `randIsConnexe` permettant de vérifier si la propriété citée précédemment est serait vérifiée si le réseau était aléatoire.
+
+   
 
 4. Calculez la distribution des degrés et tracez-la avec `gnuplot` (ou avec votre outil préféré) d'abord en échelle linéaire, ensuite en échelle log-log. Est-ce qu'on observe une ligne droite en log-log ? Que cela nous indique ? Tracez la distribution de Poisson avec la même moyenne pour comparaison. Utilisez la commande `fit` de `gnuplot` pour trouver les coefficients de la loi de puissance et tracez-la.
 
