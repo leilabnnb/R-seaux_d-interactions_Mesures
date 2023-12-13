@@ -12,9 +12,8 @@ GraphStream permet de mesurer de nombreuses caractéristiques d'un réseau. La p
 
 2. Prenez quelques mesures de base : nombre de nœuds et de liens, degré moyen, coefficient de clustering. Quel sera le coefficient de clustering pour un réseau aléatoire de la même taille et du même degré moyen ?
 
-Le coefficient de clustering pour un nœud *i* dans un réseau aléatoire est donné par la formule 
-$$ C_{i} = $$
-https://perso.lpsm.paris/~rebafka/BookGraphes/clustering-transitivit%C3%A9.html
+Le coefficient de clustering pour un nœud *i* dans un réseau aléatoire est donné par la formule
+C_{i} = \frac{\lt k\gt}{N}
 
    **DONE**
 
