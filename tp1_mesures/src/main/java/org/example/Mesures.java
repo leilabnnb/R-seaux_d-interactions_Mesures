@@ -36,7 +36,11 @@ public class Mesures {
                             "Coefficient de clustering " + clusteringCoeffG + "\n"
         );
 
-
+    // Q3 Connéxité
+            if(Toolkit.isConnected(g))
+                System.out.println("le graphe est connexe");
+            else
+                System.out.println("le graphe n'est pas connexe");
 
 
 
