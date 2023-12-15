@@ -1,15 +1,19 @@
 package org.example;
 
 import org.graphstream.algorithm.Toolkit;
+import org.graphstream.graph.BreadthFirstIterator;
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.DefaultGraph;
 import org.graphstream.stream.file.FileSource;
 import org.graphstream.stream.file.FileSourceEdge;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.io.IOException;
+import java.util.Random;
 
 
 public class Mesures {
@@ -20,6 +24,18 @@ public class Mesures {
         if(avgDegree > Math.log(order)) return true;
         else return false;
     }
+
+    /*public static double avgDistance(Graph g){
+        //ArrayList<Node> rNodes = new ArrayList<>(1000);
+        Node node;
+        Random random = new Random();
+        for (int i=0; i<1000; i++){
+            node = Toolkit.randomNode(g, random);
+            BreadthFirstIterator bfs = new BreadthFirstIterator(node);
+            //bfs.getDepthOf(g.nodes().)
+        }
+//        BreadthFirstIterator bfs =
+    }*/
 
     public static void generateFile(String filename, Graph g){
 
