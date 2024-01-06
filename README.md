@@ -53,7 +53,7 @@ Maintenant, on va calculer la distance moyenne dans le réseau. Le calcul des pl
 #### Tests sur le réseau réel
 J'ai fait plusieurs essais, la distance moyenne environne 6 à chaque fois, on peut donc dire que l'hypothèse des six degrés de séparation se confirme sur ce réseau.
 La propriété petit-monde est la suivante $`\lt d\gt \simeq \frac{\ln \left( N \right)} {\ln \left( k \right)}`$
-pour notre réseau $` \frac{\ln \left( 317080 \right)} {\ln \left( 6.62208890914917 \right)} \simeq 6.67 \simeq \lt k\gt `$
+pour notre réseau $` \frac{\ln \left( 317080 \right)} {\ln \left( 6.62208890914917 \right)} \simeq 6.67 \simeq \lt d\gt `$
 #### Pour un réseau aléatoire
 Dans la La distance moyenne est donnée par : $``$
 
