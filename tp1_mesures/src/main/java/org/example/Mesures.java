@@ -10,7 +10,7 @@ import org.graphstream.stream.file.FileSourceEdge;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.io.IOException;
 import java.util.Random;
@@ -25,19 +25,55 @@ public class Mesures {
         else return false;
     }
 
-    /*public static double avgDistance(Graph g){
-        //ArrayList<Node> rNodes = new ArrayList<>(1000);
+    /**
+     * Permet de trouver la distance moyenne du graph passé en paramètre
+     * @param g
+     * @return la distance moyenne
+     */
+    public static double avgDistance(Graph g){
         Node node;
         Random random = new Random();
-        for (int i=0; i<1000; i++){
-            node = Toolkit.randomNode(g, random);
-            BreadthFirstIterator bfs = new BreadthFirstIterator(node);
-            //bfs.getDepthOf(g.nodes().)
-        }
-//        BreadthFirstIterator bfs =
-    }*/
+        double distanceTotale = 0.0;
 
-    public static void generateFile(String filename, Graph g){
+        try {
+            String path = System.getProperty(("user.dir")) + File.separator +"tp1_mesures/data/distances.dat" ;
+            FileWriter fw = new FileWriter(path);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+
+            for (int i = 0; i < 1000; i++) {
+                node = Toolkit.randomNode(g, random);
+                BreadthFirstIterator bfs = new BreadthFirstIterator(node);
+                int compteur = 0;
+                while (bfs.hasNext()) {
+                    Node next = bfs.next();
+                    distanceTotale += bfs.getDepthOf(next);
+                    if (frequencyMap.containsKey(bfs.getDepthOf(next))) {
+                        // Si la distance est déjà dans la map, incrémenter sa fréquence.
+                        frequencyMap.put(bfs.getDepthOf(next), frequencyMap.get(bfs.getDepthOf(next)) + 1);
+                    } else {
+                        // Sinon, ajouter la distance à la map avec une fréquence de 1.
+                        frequencyMap.put(bfs.getDepthOf(next), 1);
+                    }
+                }
+
+            }
+            for (Integer distance : frequencyMap.keySet()) {
+                bw.write(distance +"\t"+ frequencyMap.get(distance) +"\n" );
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        double distanceMoyenne = distanceTotale/ (1000 * (g.getNodeCount() -1));
+
+        return distanceMoyenne;
+    }
+
+
+
+    public static void generateFileDegreeDist(String filename, Graph g){
 
         try {
             String path = System.getProperty(("user.dir")) + File.separator + filename;
@@ -65,7 +101,7 @@ public class Mesures {
         fs.addSink(g);
 
         try {
-            fs.readAll("/home/etudiant/BS204037/RI/tp1_mesures/data/com-dblp.ungraph.txt");
+            fs.readAll("/home/leila/RI/TP_mesures/tp1_mesures/data/com-dblp.ungraph.txt");
         } catch( IOException e) {
             e.printStackTrace();
         } finally {
@@ -103,14 +139,20 @@ public class Mesures {
         // A partir de quel degré moyen un réseau aléatoire de même taille serait connexe
         System.out.println("Le degré moyen pour qu'un réseau aléatoire de taille " + order + " soit connexe doit être supérieur à " +Math.log(order));
 
-        int[] degreeDist = Toolkit.degreeDistribution(g);
+        // Q4
+        /*int[] degreeDist = Toolkit.degreeDistribution(g);
         for (int k = 0; k < degreeDist.length; k++) {
             if (degreeDist[k] != 0) {
                 System.out.printf(Locale.US, "%6d%20.8f%n", k, (double)degreeDist[k] / g.getNodeCount());
             }
-        }
+        }*/
 
-        generateFile("tp1_mesures/data/distribution.dat", g);
+        //generateFileDegreeDist("tp1_mesures/data/distribution.dat", g);
+
+        // Q5
+        /// estimer distance moyenne
+
+        System.out.println("Question 5\nDistance moyenne obtenue par echantillonage : " + avgDistance(g));
 
 
     }
