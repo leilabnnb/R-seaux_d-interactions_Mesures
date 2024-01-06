@@ -54,7 +54,9 @@ Maintenant, on va calculer la distance moyenne dans le réseau. Le calcul des pl
 J'ai fait plusieurs essais, la distance moyenne environne 6 à chaque fois, on peut donc dire que l'hypothèse des six degrés de séparation se confirme sur ce réseau.
 C'est un réseau petit monde.
 #### Pour un réseau aléatoire 
-La distance moyenne est donnée par : $``$
+La distance moyenne est donnée par : $`  `$
+
+![distribution des distances](tp1_mesures/data/distanceHisto.png)
 
 ### Question 6
 Utilisez les générateurs de GraphStream pour générer un réseau aléatoire et un réseau avec la méthode d'attachement préférentiel (Barabasi-Albert) qui ont la même taille et le même degré moyen. Refaites les mesures des questions précédentes pour ces deux réseaux. Les résultats expérimentaux correspondent-ils aux prédictions théoriques ? Comparez avec le réseau de collaboration. Que peut-on conclure ?
