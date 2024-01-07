@@ -53,9 +53,12 @@ Maintenant, on va calculer la distance moyenne dans le réseau. Le calcul des pl
 #### Tests sur le réseau réel
 J'ai fait plusieurs essais, la distance moyenne environne 6 à chaque fois, on peut donc dire que l'hypothèse des six degrés de séparation se confirme sur ce réseau.
 La propriété petit-monde est la suivante $`\lt d\gt \simeq \frac{\ln \left( N \right)} {\ln \left( k \right)}`$
-pour notre réseau $` \frac{\ln \left( 317080 \right)} {\ln \left( 6.62208890914917 \right)} \simeq 6.67 \simeq \lt d\gt `$
+pour notre réseau $` \frac{\ln \left( 317080 \right)} {\ln \left( 6.62208890914917 \right)} \simeq 6.7 \simeq \lt d\gt `$
+on peut ainsi déduire que ce réseau est un réseau petit-monde.
+
+![distribution des distances](tp1_mesures/data/distanceHisto.png)
 #### Pour un réseau aléatoire
-Dans la La distance moyenne est donnée par : $``$
+La distance moyenne est donnée par : $``$
 
 ### Question 6
 Utilisez les générateurs de GraphStream pour générer un réseau aléatoire et un réseau avec la méthode d'attachement préférentiel (Barabasi-Albert) qui ont la même taille et le même degré moyen. Refaites les mesures des questions précédentes pour ces deux réseaux. Les résultats expérimentaux correspondent-ils aux prédictions théoriques ? Comparez avec le réseau de collaboration. Que peut-on conclure ?

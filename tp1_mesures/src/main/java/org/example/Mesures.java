@@ -8,6 +8,7 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.DefaultGraph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.stream.file.FileSource;
+import org.graphstream.stream.file.FileSourceDGS;
 import org.graphstream.stream.file.FileSourceEdge;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -57,13 +58,13 @@ public class Mesures {
      * @param g
      * @return la distance moyenne
      */
-    public static double avgDistance(Graph g){
+    public static double avgDistance(Graph g, String filename){
         Node node;
         Random random = new Random();
         double distanceTotale = 0.0;
 
         try {
-            String path = System.getProperty(("user.dir")) + File.separator +"tp1_mesures/data/distances.dat" ;
+            String path = System.getProperty(("user.dir")) + File.separator + filename ;
             FileWriter fw = new FileWriter(path);
             BufferedWriter bw = new BufferedWriter(fw);
 
@@ -102,7 +103,7 @@ public class Mesures {
      */
 
     // Q6
-    public static void genRandomNetwork (int n, double avgDegree){
+    public static void genRandomNetwork (int n, double avgDegree, String filename){
 
         Graph g = new SingleGraph("réseau aléatoire");
         RandomGenerator gen = new RandomGenerator(avgDegree);
@@ -115,23 +116,26 @@ public class Mesures {
 
         FileSinkDGS fileSinkDGS = new FileSinkDGS();
         try {
-            fileSinkDGS.writeAll(g, "/home/leila/RI/TP_mesures/tp1_mesures/graph/randomNetwork.dgs");
+            fileSinkDGS.writeAll(g, filename);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void genBarabasiNetwork (int n, double avgDegree){
+    public static void genBarabasiNetwork (int n, double avgDegree, String filename){
 
         Graph g = new SingleGraph("réseau Barabàsi-Albert");
         RandomGenerator gen = new RandomGenerator(avgDegree);
         gen.addSink(g);
         gen.begin();
+        for(int i=0; i<n; i++) {
+            gen.nextEvents();
+        }
         gen.end();
 
         FileSinkDGS fileSinkDGS = new FileSinkDGS();
         try {
-            fileSinkDGS.writeAll(g, "/home/leila/RI/TP_mesures/tp1_mesures/graph/randomNetwork.dgs");
+            fileSinkDGS.writeAll(g, filename);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -141,10 +145,17 @@ public class Mesures {
         // mesures
         System.out.println("Nombre de noeuds " + g.getNodeCount() + "\n" +
                 "Nombre de liens " + g.getEdgeCount() + "\n" +
-                "Coefficient de clustering " + averageClusteringCoefficient(g) + "\n"
+                "Coefficient de clustering " + averageClusteringCoefficient(g) + "\n"+
+                "Degré moyen " + averageDegree(g) + "\n"
         );
+
+        // connexité
+        if (Toolkit.isConnected(g))
+            System.out.println("Le réseau est connexe");
+        else
+            System.out.println("Le réseau n'est pas connexe");
+
         double distanceTotale = 0;
-        int nbr=0;
         for(int i = 0 ; i < 1000 ; i++){
             Node depart = randomNode(g);
             BreadthFirstIterator it = new BreadthFirstIterator(depart);
@@ -187,8 +198,8 @@ public class Mesures {
         System.out.println();
 
 
-        // Q3 Connéxité
-        System.out.println("Question 3");
+        // Q3 Connexité
+        /*System.out.println("Question 3");
 
         // Le réseau est-il connexe
         if (Toolkit.isConnected(g))
@@ -202,27 +213,71 @@ public class Mesures {
         else
             System.out.println("Le réseau aléatoire de même degré moyen et avec le même nombre de noeuds n'est pas connexe.");
 
-        // A partir de quel degré moyen un réseau aléatoire de même taille serait connexe
+        // À partir de quel degré moyen un réseau aléatoire de même taille serait connexe
         System.out.println("Le degré moyen pour qu'un réseau aléatoire de taille " + order + " soit connexe doit être supérieur à " + Math.log(order));
 
         // Q4
-        /*int[] degreeDist = Toolkit.degreeDistribution(g);
-        for (int k = 0; k < degreeDist.length; k++) {
-            if (degreeDist[k] != 0) {
-                System.out.printf(Locale.US, "%6d%20.8f%n", k, (double)degreeDist[k] / g.getNodeCount());
-            }
-        }*/
-
-        //generateFileDegreeDist("tp1_mesures/data/distribution.dat", g);
+        String fileDegreeDist = "tp1_mesures/data/distribution.dat";
+        generateFileDegreeDist(fileDegreeDist, g);
 
         // Q5
         /// estimer distance moyenne
-        System.out.println("Question 5\nDistance moyenne obtenue par echantillonage : " + avgDistance(g));
-
+        String fileDistance = "tp1_mesures/data/distances.dat";
+        System.out.println("Question 5\nDistance moyenne obtenue par echantillonage : " + avgDistance(g, fileDistance));
+*/
         // Q6
         // test des 3 méthodes ...
+        // Réseau aléatoire
+        System.out.println("Mesures dans réseau aléatoire");
+        String filenameRand = "/home/leila/RI/TP_mesures/tp1_mesures/graph/randomNetwork2.dgs";
+        genRandomNetwork(317080, 6.62208890914917, filenameRand);
+        Graph gRan = new SingleGraph("gRan");
+        FileSourceDGS fsRan = new FileSourceDGS();
+
+        fsRan.addSink(gRan);
+
+        try {
+            fsRan.readAll(filenameRand);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            fsRan.removeSink(gRan);
+        }
+
+        mesuresDeBases(gRan);
+        String fileDegreeDistRan = "tp1_mesures/data/distributionRan.dat";
+        generateFileDegreeDist(fileDegreeDistRan, gRan);
+
+        /// estimer distance moyenne
+        String fileDistanceRan = "tp1_mesures/data/distancesRandom.dat";
+        System.out.println("Distance moyenne dans un graph obtenue par échantillonnage : " + avgDistance(gRan, fileDistanceRan));
+
+
+        // Réseau barabasi
+        System.out.println("\nMesures dans réseau Barabasi");
+        String filenameBarabasi = "/home/leila/RI/TP_mesures/tp1_mesures/graph/barabasiNetwork2.dgs";
+        genBarabasiNetwork(317080, 6.62208890914917, filenameBarabasi);
+        Graph gBarabasi = new SingleGraph("gBarabasi");
+        FileSourceDGS fsBarabasi = new FileSourceDGS();
+        fsBarabasi.addSink(gBarabasi);
+        try {
+            fsBarabasi.readAll(filenameBarabasi);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            fsBarabasi.removeSink(gBarabasi);
+        }
+
+        mesuresDeBases(gBarabasi);
+        String fileDegreeDistBarabasi = "tp1_mesures/data/distributionBarabasi.dat";
+        generateFileDegreeDist(fileDegreeDistBarabasi, gBarabasi);
+
+        /// estimer distance moyenne
+        String fileDistanceBarabasi = "tp1_mesures/data/distancesBarabasi.dat";
+        System.out.println("Distance moyenne dans un graph obtenue par échantillonnage : " + avgDistance(gBarabasi, fileDistanceBarabasi));
 
     }
+
 
 
 
