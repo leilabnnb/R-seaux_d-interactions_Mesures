@@ -28,9 +28,7 @@ public class Propagation {
 
     /**
      * Fonction permettant de simuler le processus d'infection d'un noeud passé en paramètre
-     *
      * @param n noeud à infecter sous certaines conditions
-     * @return le nombre d'infectés
      */
     public static void infecte(Node n) {
         double probaDInfection = Math.random();
