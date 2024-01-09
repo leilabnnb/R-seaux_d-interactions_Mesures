@@ -1,10 +1,19 @@
 package org.example;
 
+import org.graphstream.graph.BreadthFirstIterator;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static org.graphstream.algorithm.Toolkit.averageDegree;
+import static org.graphstream.algorithm.Toolkit.randomNode;
 
 public class Propagation {
 
@@ -66,6 +75,8 @@ public class Propagation {
 
 
     public static void scénario1(Graph g){
+        String line = "";
+        StringBuilder fileContent = new StringBuilder();
         Node patient0 = g.getNode(0);
         patient0.setAttribute("infecté", true);
         int infections = 1;
@@ -78,13 +89,88 @@ public class Propagation {
                 }
                 infections = immunise(n, infections); // utilisation de l'anti virus si proba assez élevée
             }
+            line = i+1 + " "+ infections + "\n";
+            fileContent.append(line);
         }
+        generateFile(fileContent, "tp_propagation/dataPropagation/scenario1.dat");
+
     }
 
     public static void scénario2(Graph g) {
-
+        // On tire au hasard 50% des noeuds et les immunise
+        int immunisations = 0;
+        ArrayList<Node> listeAImmuniser = new ArrayList<Node>();
+        for(int i=0; i< g.getNodeCount()/2; i++) {
+            listeAImmuniser.add(randomNode(g));
+        }
+        for (Node n : listeAImmuniser) {
+            n.setAttribute("immunisé", true);
+            immunisations ++;
+        }
+        String line ="";
+        StringBuilder fileContent = new StringBuilder();
+        Node patient0 = g.getNode(0);
+        patient0.setAttribute("infecté", true);
+        int infections = 1;
+        for(int i = 0; i<90; i++){
+            for(Node n : g){
+                if(n.hasAttribute("infecté")){ // patient0 sera le premier à vérifier la condition donc premier à contaminer tous ses collègues
+                    for(Edge e : n){
+                        infections = infecte(e.getOpposite(n), infections);
+                    }
+                }
+                infections = immunise(n, infections); // utilisation de l'anti virus si proba assez élevée
+            }
+            line = i+1 + " "+ infections + "\n";
+            fileContent.append(line);
+        }
+        generateFile(fileContent, "tp_propagation/dataPropagation/scenario2.dat");
     }
 
+    public static void scénario3(Graph g){
+        // On tire au hasard 50% des noeuds et immunise un de leur voisin
+        int immunisations = 0;
+        ArrayList<Node> aSelectionner= new ArrayList<Node>();
+        for(int i=0; i< g.getNodeCount()/2; i++) {
+            aSelectionner.add(randomNode(g));
+        }
+        for (Node n: aSelectionner){
+            int aImmuniser = (int) (Math.random()*n.edges().count());
+            n.getEdge(aImmuniser).getOpposite(n).setAttribute("immunise", true);
+            immunisations++;
+        }
+        String line = "";
+        StringBuilder fileContent = new StringBuilder();
+        Node patient0 = g.getNode(0);
+        patient0.setAttribute("infecté", true);
+        int infections = 1;
+        for(int i = 0; i<90; i++){
+            for(Node n : g){
+                if(n.hasAttribute("infecté")){ // patient0 sera le premier à vérifier la condition donc premier à contaminer tous ses collègues
+                    for(Edge e : n){
+                        infections = infecte(e.getOpposite(n), infections);
+                    }
+                }
+                infections = immunise(n, infections); // utilisation de l'anti virus si proba assez élevée
+            }
+            line = i+1 + " "+ infections + "\n";
+            fileContent.append(line);
 
+        }
+        generateFile(fileContent, "tp_propagation/dataPropagation/scenario3.dat");
+    }
+
+    public static void generateFile(StringBuilder fileContent, String filename){
+        try {
+            String path = System.getProperty(("user.dir")) + File.separator + filename ;
+            FileWriter fw = new FileWriter(path);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(String.valueOf(fileContent));
+            bw.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
 
 }
