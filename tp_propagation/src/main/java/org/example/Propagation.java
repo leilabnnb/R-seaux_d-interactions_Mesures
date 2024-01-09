@@ -1,16 +1,15 @@
 package org.example;
 
-import org.graphstream.graph.BreadthFirstIterator;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.DefaultGraph;
+import org.graphstream.stream.file.FileSource;
+import org.graphstream.stream.file.FileSourceEdge;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Scanner;
 
 import static org.graphstream.algorithm.Toolkit.averageDegree;
 import static org.graphstream.algorithm.Toolkit.randomNode;
@@ -18,6 +17,21 @@ import static org.graphstream.algorithm.Toolkit.randomNode;
 public class Propagation {
 
 
+    public static Graph builtGraph() {
+        Graph g = new DefaultGraph("g");
+        FileSource fs = new FileSourceEdge();
+
+        fs.addSink(g);
+
+        try {
+            fs.readAll("/home/leila/RI/TP_mesures/DGS/com-dblp.ungraph.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            fs.removeSink(g);
+        }
+        return g;
+    }
     public static double averageCarres(Graph g) {
         double sommeCarres = 0.0;
         for (Node node : g) {
@@ -74,7 +88,7 @@ public class Propagation {
     }
 
 
-    public static void scénario1(Graph g){
+    public static void scénario1(Graph g, String filename){
         String line = "";
         StringBuilder fileContent = new StringBuilder();
         Node patient0 = g.getNode(0);
@@ -92,11 +106,11 @@ public class Propagation {
             line = i+1 + " "+ infections + "\n";
             fileContent.append(line);
         }
-        generateFile(fileContent, "tp_propagation/dataPropagation/scenario1.dat");
+        generateFile(fileContent, filename);
 
     }
 
-    public static void scénario2(Graph g) {
+    public static void scénario2(Graph g, String filename) {
         // On tire au hasard 50% des noeuds et les immunise
         int immunisations = 0;
         ArrayList<Node> listeAImmuniser = new ArrayList<Node>();
@@ -124,10 +138,10 @@ public class Propagation {
             line = i+1 + " "+ infections + "\n";
             fileContent.append(line);
         }
-        generateFile(fileContent, "tp_propagation/dataPropagation/scenario2.dat");
+        generateFile(fileContent, filename);
     }
 
-    public static void scénario3(Graph g){
+    public static void scénario3(Graph g, String filename){
         // On tire au hasard 50% des noeuds et immunise un de leur voisin
         int immunisations = 0;
         ArrayList<Node> aSelectionner= new ArrayList<Node>();
@@ -136,7 +150,7 @@ public class Propagation {
         }
         for (Node n: aSelectionner){
             int aImmuniser = (int) (Math.random()*n.edges().count());
-            n.getEdge(aImmuniser).getOpposite(n).setAttribute("immunise", true);
+            n.getEdge(aImmuniser).getOpposite(n).setAttribute("immunisé", true);
             immunisations++;
         }
         String line = "";
@@ -157,7 +171,7 @@ public class Propagation {
             fileContent.append(line);
 
         }
-        generateFile(fileContent, "tp_propagation/dataPropagation/scenario3.dat");
+        generateFile(fileContent, filename);
     }
 
     public static void generateFile(StringBuilder fileContent, String filename){
@@ -172,5 +186,6 @@ public class Propagation {
         }
 
     }
+
 
 }
