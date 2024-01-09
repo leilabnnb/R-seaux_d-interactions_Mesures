@@ -7,11 +7,15 @@ import org.graphstream.stream.file.FileSourceEdge;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.example.Propagation.*;
 
 public class Main {
+
     public static void main(String[] args) {
+
+        ArrayList<Double> getGroupesAvgDegree = new ArrayList<>();
 
         Graph g = builtGraph();
 
@@ -31,8 +35,12 @@ public class Main {
             scénario2(g2, "tp_propagation/dataPropagation/scenario2_"+i+".dat");
 
             Graph g3 = builtGraph();
-            scénario3(g3, "tp_propagation/dataPropagation/scenario3_"+i+".dat");
+            getGroupesAvgDegree = scénario3(g3, "tp_propagation/dataPropagation/scenario3_"+i+".dat");
         }
+
+        System.out.println("Degré moyen du groupe 0: "+ getGroupesAvgDegree.get(0));
+        System.out.println("Degré moyen du groupe 1: "+ getGroupesAvgDegree.get(1));
+
 
     }
 

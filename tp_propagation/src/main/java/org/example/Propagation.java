@@ -141,9 +141,12 @@ public class Propagation {
         generateFile(fileContent, filename);
     }
 
-    public static void scénario3(Graph g, String filename){
+    public static ArrayList<Double> scénario3(Graph g, String filename){
         // On tire au hasard 50% des noeuds et immunise un de leur voisin
         int immunisations = 0;
+        double avgDegreeG0 = 0.0;
+        double avgDegreeG1 = 0.0;
+        ArrayList<Double> groupesAvgDegree = new ArrayList<>();
         ArrayList<Node> aSelectionner= new ArrayList<Node>();
         for(int i=0; i< g.getNodeCount()/2; i++) {
             aSelectionner.add(randomNode(g));
@@ -152,6 +155,8 @@ public class Propagation {
             int aImmuniser = (int) (Math.random()*n.edges().count());
             n.getEdge(aImmuniser).getOpposite(n).setAttribute("immunisé", true);
             immunisations++;
+            avgDegreeG0 += n.getDegree();
+            avgDegreeG1 += n.getEdge(aImmuniser).getOpposite(n).getDegree();
         }
         String line = "";
         StringBuilder fileContent = new StringBuilder();
@@ -172,6 +177,14 @@ public class Propagation {
 
         }
         generateFile(fileContent, filename);
+
+        // Q3 calcul des degrés moyens des groupes 0 et 1
+        avgDegreeG0 = avgDegreeG0/immunisations;
+        avgDegreeG1 = avgDegreeG1/immunisations;
+        groupesAvgDegree.add(avgDegreeG0);
+        groupesAvgDegree.add(avgDegreeG1);
+
+        return groupesAvgDegree;
     }
 
     public static void generateFile(StringBuilder fileContent, String filename){
