@@ -42,21 +42,39 @@ public class Propagation {
         return sommeCarres / (g.getNodeCount() - deleted );
     }
 
+    public static double seuilEpidRéel(Graph g, int deleted) {
+        return avgDegreeModif(g, deleted) / averageCarres(g, deleted );
+    }
+    public static double seuilEpidAlea(Graph g) {
+        return 1 / (averageDegree(g) + 1);
+    }
+
     public static double avgDegreeModif(Graph g, int deleted){
         double somme = 0.0;
         for (Node node : g) {
-            somme += node.getDegree();
+            if (!node.hasAttribute("immunisé"))
+                somme += node.getDegree();
         }
         return  somme / (g.getNodeCount() - deleted);
     }
 
-    public static double seuilEpidRéel(Graph g, int deleted) {
-        return avgDegreeModif(g, deleted) / averageCarres(g, deleted );
+    public static double averageCarresModif(Graph g, int deleted) {
+        double sommeCarres = 0.0;
+        for (Node node : g) {
+            if (!node.hasAttribute("immunisé")) {
+                int degree = node.getDegree();
+                sommeCarres += degree * degree;
+            }
+        }
+
+        return sommeCarres / (g.getNodeCount() - deleted );
     }
 
-    public static double seuilEpidAlea(Graph g) {
-        return 1 / (averageDegree(g) + 1);
+    public static double seuilEpidRéelModif(Graph g, int deleted) {
+        return avgDegreeModif(g, deleted) / averageCarresModif(g, deleted );
     }
+
+
 
     /**
      * Fonction permettant de simuler le processus d'infection d'un noeud passé en paramètre
@@ -147,7 +165,7 @@ public class Propagation {
             fileContent.append(line);
         }
         generateFile(fileContent, filename);
-        return seuilEpidRéel(g, immunisations);
+        return seuilEpidRéelModif(g, immunisations);
     }
 
     public static ArrayList<Double> scénario3(Graph g, String filename){
@@ -192,7 +210,7 @@ public class Propagation {
         avgDegreeG1 = avgDegreeG1/immunisations;
         degresEtSeuil.add(avgDegreeG0);
         degresEtSeuil.add(avgDegreeG1);
-        degresEtSeuil.add(seuilEpidRéel(g, immunisations));
+        degresEtSeuil.add(seuilEpidRéelModif(g, immunisations));
 
         return degresEtSeuil;
     }

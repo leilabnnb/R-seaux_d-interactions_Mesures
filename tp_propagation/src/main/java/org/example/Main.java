@@ -31,7 +31,7 @@ public class Main {
 
         for (int i = 0; i<5; i++) {
             Graph g1 = builtGraph();
-            scénario1(g1, "tp_propagation/dataPropagation/scenario1_"+i+".dat");
+            //scénario1(g1, "tp_propagation/dataPropagation/scenario1_"+i+".dat");
 
             Graph g2 = builtGraph();
             seuilScénario2 = scénario2(g2, "tp_propagation/dataPropagation/scenario2_"+i+".dat");
