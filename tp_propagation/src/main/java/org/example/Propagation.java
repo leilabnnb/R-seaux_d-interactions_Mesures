@@ -32,18 +32,26 @@ public class Propagation {
         }
         return g;
     }
-    public static double averageCarres(Graph g) {
+    public static double averageCarres(Graph g, int deleted) {
         double sommeCarres = 0.0;
         for (Node node : g) {
             int degree = node.getDegree();
             sommeCarres += degree * degree;
         }
 
-        return sommeCarres / g.getNodeCount();
+        return sommeCarres / (g.getNodeCount() - deleted );
     }
 
-    public static double seuilEpidRéel(Graph g) {
-        return averageDegree(g) / averageCarres(g);
+    public static double avgDegreeModif(Graph g, int deleted){
+        double somme = 0.0;
+        for (Node node : g) {
+            somme += node.getDegree();
+        }
+        return  somme / (g.getNodeCount() - deleted);
+    }
+
+    public static double seuilEpidRéel(Graph g, int deleted) {
+        return avgDegreeModif(g, deleted) / averageCarres(g, deleted );
     }
 
     public static double seuilEpidAlea(Graph g) {
@@ -110,7 +118,7 @@ public class Propagation {
 
     }
 
-    public static void scénario2(Graph g, String filename) {
+    public static double scénario2(Graph g, String filename) {
         // On tire au hasard 50% des noeuds et les immunise
         int immunisations = 0;
         ArrayList<Node> listeAImmuniser = new ArrayList<Node>();
@@ -139,6 +147,7 @@ public class Propagation {
             fileContent.append(line);
         }
         generateFile(fileContent, filename);
+        return seuilEpidRéel(g, immunisations);
     }
 
     public static ArrayList<Double> scénario3(Graph g, String filename){
@@ -146,7 +155,7 @@ public class Propagation {
         int immunisations = 0;
         double avgDegreeG0 = 0.0;
         double avgDegreeG1 = 0.0;
-        ArrayList<Double> groupesAvgDegree = new ArrayList<>();
+        ArrayList<Double> degresEtSeuil = new ArrayList<>();
         ArrayList<Node> aSelectionner= new ArrayList<Node>();
         for(int i=0; i< g.getNodeCount()/2; i++) {
             aSelectionner.add(randomNode(g));
@@ -181,10 +190,11 @@ public class Propagation {
         // Q3 calcul des degrés moyens des groupes 0 et 1
         avgDegreeG0 = avgDegreeG0/immunisations;
         avgDegreeG1 = avgDegreeG1/immunisations;
-        groupesAvgDegree.add(avgDegreeG0);
-        groupesAvgDegree.add(avgDegreeG1);
+        degresEtSeuil.add(avgDegreeG0);
+        degresEtSeuil.add(avgDegreeG1);
+        degresEtSeuil.add(seuilEpidRéel(g, immunisations));
 
-        return groupesAvgDegree;
+        return degresEtSeuil;
     }
 
     public static void generateFile(StringBuilder fileContent, String filename){
