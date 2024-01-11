@@ -180,6 +180,7 @@ la propagation du virus n'est pas ralentie.
 
 ##### Scénario 1
 ![comparaison scenario1](tp_propagation/dataPropagation/S1/comp_scenario1.png)
+
 Le nombre d'inféctés atteint un nombre de grandeur similaire pour 
 chacun des réseaux, on remarque cependant une propagation plus rapide 
 dans le réseau de collaboration. 
@@ -189,6 +190,7 @@ la même manière.
 
 ##### Scénario 2
 ![comparaison scenario2](tp_propagation/dataPropagation/S2/comp_scenario2.png)
+
 Le nombre d'inféctés est moins important que lors du scénario 1,
 la propagation est toujours plus lente du côté du réseau aléatoire 
 et celui de Barabasi-Albert, mais le nombre d'infécté est supérieur 
@@ -196,6 +198,7 @@ pour ces deux réseaux que dans le réseau de collaboration.
 
 ##### Scénario 3
 ![comparaison scenario3](tp_propagation/dataPropagation/S3/comp_scenario3.png)
+
 Nous pouvons enfin observer une légère différence entre le réseau 
 aléatoire et le réseau de Barabasi-Albert dans la vitesse de 
 propagation. 
