@@ -4,7 +4,9 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.DefaultGraph;
+import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.stream.file.FileSource;
+import org.graphstream.stream.file.FileSourceDGS;
 import org.graphstream.stream.file.FileSourceEdge;
 
 import java.io.*;
@@ -32,6 +34,39 @@ public class Propagation {
         }
         return g;
     }
+
+    public static Graph builtGraphAlea(String filenameRand) {
+        Graph gRan = new SingleGraph("gRan");
+        FileSourceDGS fsRan = new FileSourceDGS();
+
+        fsRan.addSink(gRan);
+
+        try {
+            fsRan.readAll(filenameRand);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            fsRan.removeSink(gRan);
+        }
+
+        return gRan;
+    }
+
+    public static Graph builtGraphBarabasi(String filenameBarabasi) {
+        Graph gBarabasi = new SingleGraph("gBarabasi");
+        FileSourceDGS fsBarabasi = new FileSourceDGS();
+        fsBarabasi.addSink(gBarabasi);
+        try {
+            fsBarabasi.readAll(filenameBarabasi);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            fsBarabasi.removeSink(gBarabasi);
+        }
+
+        return gBarabasi;
+    }
+
     public static double averageCarres(Graph g, int deleted) {
         double sommeCarres = 0.0;
         for (Node node : g) {
@@ -178,12 +213,14 @@ public class Propagation {
         for(int i=0; i< g.getNodeCount()/2; i++) {
             aSelectionner.add(randomNode(g));
         }
-        for (Node n: aSelectionner){
-            int aImmuniser = (int) (Math.random()*n.edges().count());
-            n.getEdge(aImmuniser).getOpposite(n).setAttribute("immunisé", true);
-            immunisations++;
-            avgDegreeG0 += n.getDegree();
-            avgDegreeG1 += n.getEdge(aImmuniser).getOpposite(n).getDegree();
+        for (Node n: aSelectionner) {
+            if (n.edges().count() != 0) {
+                int aImmuniser = (int) (Math.random() * n.edges().count());
+                n.getEdge(aImmuniser).getOpposite(n).setAttribute("immunisé", true);
+                immunisations++;
+                avgDegreeG0 += n.getDegree();
+                avgDegreeG1 += n.getEdge(aImmuniser).getOpposite(n).getDegree();
+            }
         }
         String line = "";
         StringBuilder fileContent = new StringBuilder();
