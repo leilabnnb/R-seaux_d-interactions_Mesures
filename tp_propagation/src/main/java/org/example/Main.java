@@ -60,7 +60,7 @@ public class Main {
 */
 
         //Q5 tests sur réseau aléatoire et Barabasi
-/*
+
         for (int i = 0; i<5; i++) {
             Graph gAlea1 = builtGraphAlea(filenameRand);
             scénario1(gAlea1, "tp_propagation/dataPropagation/aléatoire/alea_scenario1_"+i+".dat");
@@ -82,9 +82,9 @@ public class Main {
         System.out.println("Degré moyen du groupe 1: "+ aléaGetGroupesAvgDegree.get(1));
 
         System.out.println("Seuil épidémique du réseau modifié suite à l'immunisation séléctive: "+ aléaGetGroupesAvgDegree.get(2));
-*/
 
 
+/*
         for (int i = 0; i<5; i++) {
             Graph gBarabasi1 = builtGraphBarabasi(filenameBarabasi);
             scénario1(gBarabasi1, "tp_propagation/dataPropagation/barabasi/barabasi_scenario1_"+i+".dat");
@@ -108,7 +108,7 @@ public class Main {
 
         System.out.println("Seuil épidémique du réseau modifié suite à l'immunisation séléctive: "+ barabasiGetGroupesAvgDegree.get(2));
 
-
+*/
 
 
 

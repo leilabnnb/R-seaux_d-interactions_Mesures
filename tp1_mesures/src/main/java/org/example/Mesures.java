@@ -1,6 +1,8 @@
 package org.example;
 
 import org.graphstream.algorithm.Toolkit;
+import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
+import org.graphstream.algorithm.generator.Generator;
 import org.graphstream.algorithm.generator.RandomGenerator;
 import org.graphstream.graph.BreadthFirstIterator;
 import org.graphstream.graph.Graph;
@@ -125,7 +127,7 @@ public class Mesures {
     public static void genBarabasiNetwork (int n, double avgDegree, String filename){
 
         Graph g = new SingleGraph("réseau Barabàsi-Albert");
-        RandomGenerator gen = new RandomGenerator(avgDegree);
+        Generator gen = new BarabasiAlbertGenerator((int) avgDegree);
         gen.addSink(g);
         gen.begin();
         for(int i=0; i<n; i++) {
@@ -199,7 +201,7 @@ public class Mesures {
 
 
         // Q3 Connexité
-        /*System.out.println("Question 3");
+        System.out.println("Question 3");
 
         // Le réseau est-il connexe
         if (Toolkit.isConnected(g))
@@ -224,7 +226,7 @@ public class Mesures {
         /// estimer distance moyenne
         String fileDistance = "tp1_mesures/data/distances.dat";
         System.out.println("Question 5\nDistance moyenne obtenue par echantillonage : " + avgDistance(g, fileDistance));
-*/
+
         // Q6
         // test des 3 méthodes ...
         // Réseau aléatoire

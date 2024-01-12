@@ -17,6 +17,11 @@ Voir [`FileSourceEdge`](https://data.graphstream-project.org/api/gs-core/current
 Prenez quelques mesures de base : nombre de nœuds et de liens, degré moyen, coefficient de clustering. 
 Quel sera le coefficient de clustering pour un réseau aléatoire de la même taille et du même degré moyen ?
 
+#### Résultats des mesures
+
+- Degré moyen : 6.622
+- Coefficient de clustering : 0.632
+
 Le coefficient de clustering pour un nœud *i* dans un réseau aléatoire est donné par la formule
 $` C_{i} = \frac{\lt k\gt}{N}`$ 
 
@@ -34,7 +39,7 @@ Le réseau est-il connexe ? Un réseau aléatoire de la même taille et degré m
 La méthode `randIsConnexe` permettant de vérifier si la propriété citée précédemment est serait vérifiée
 si le réseau était aléatoire.
 
-- Un réseau aléatoire de même taille devient connexe si le degré moyen est supérieur à 12.666909386951092
+- Un réseau aléatoire de même taille devient connexe si le degré moyen est supérieur à 12.666
 
 
 
@@ -74,6 +79,7 @@ choisis au hasard. L'hypothèse des six degrés de séparation se confirme-t-ell
 réseau petit monde ? Quelle sera la distance moyenne dans un réseau aléatoire avec les mêmes caractéristiques ? 
 Tracez également la *distribution* des distances. 
 Formulez une hypothèse sur la loi de cette distribution.
+
 #### Tests sur le réseau réel
 J'ai fait plusieurs essais, la distance moyenne environne 6 à chaque fois, on peut donc dire que l'hypothèse
 des six degrés de séparation se confirme sur ce réseau.
@@ -82,9 +88,11 @@ pour notre réseau $` \frac{\ln \left( 317080 \right)} {\ln \left( 6.62208890914
 on peut ainsi déduire que ce réseau est un réseau petit-monde.
 
 J'ai choisi de représenter la distribution des distances à l'aide d'un histogramme, car cela m'a paru plus 
-parlant étant donné qu'on manipule des valeurs discrètes. 
+parlant étant donné qu'on manipule des valeurs discrètes.
+
 ##### Distribution des distances dans le réseau de collaboration
 ![distribution des distances](tp1_mesures/data/distanceHisto.png)
+
 La forme de cloche obtenue s'apparente à une loi de poisson.
 
 #### Pour un réseau aléatoire de même degré moyen
@@ -98,47 +106,73 @@ correspondent-ils aux prédictions théoriques ? Comparez avec le réseau de col
 Que peut-on conclure ?
 
 #### Réseau aléatoire
-- Nombre de noeuds 317087
+- Nombre de nœuds 317087
 - Nombre de liens 1050289
 - Coefficient de clustering 2.751E-5
 - Degré moyen 6.624
 - Le réseau n'est pas connexe
 - Distance moyenne dans le réseau : 6.899
 
-Les résultats obtenus sont trés proches des prédictions théoriques calculées plus haut. 
+Les résultats obtenus sont trés proches des prédictions théoriques 
+calculées plus haut. 
+
+##### Distribution des degrés
+![distribution des degrés dans réseau aléatoire log-log](tp1_mesures/data/degreeDistRan.png)
+![distribution des degrés dans réseau aléatoire lin](tp1_mesures/data/linAléadegree.png)
+
+
+
+Les résultats confirment bien ce qu'on a vu en cours, dans un réseau aléatoire la distribution des degrés suit une loi de poisson.
+
+##### Distribution des distances 
+![distribution des distances dans réseau aléatoire](tp1_mesures/data/distanceHistoAlea.png)
+
+
+
+
 
 #### Réseau par la méthode d'attachement préférentiel Barabasi-Albert
-- Nombre de noeuds 317087
-- Nombre de liens 1050310
-- Coefficient de clustering 2.419E-5
+- Nombre de nœuds 317082
+- Nombre de liens 1109289
+- Coefficient de clustering 3.885E-4
 - Degré moyen 6.624
-- Le réseau n'est pas connexe
-- Distance moyenne dans le réseau : 6.889
+- Le réseau est connexe
+- Distance moyenne dans le réseau : 5.062
+
+
+##### Distribution des degrés
+![distribution des degrés dans réseau barabasi log-log](tp1_mesures/data/degreeDistBarabasi.png)
+![distribution des degrés dans réseau barabasi lin](tp1_mesures/data/linBarabasidegree.png)
+
+La distribution correspond bien aux prédictions théoriques, elle suit une loi puissance avec une 
+
+##### Distribution des distances
+![distribution des distances dans réseau barabasi](tp1_mesures/data/distanceHistoBarabasi.png)
+
 
 
 En théorie, la distance moyenne dans le réseau suivant le modèle de Barabasi-Albert serait égale à 4,988 et
-devrait être inférieure à celle d'un réseau aléatoire avec les mêmes caractéristiques, les résultats de nos 
+devrait être inférieure à celle d'un réseau aléatoire avec les mêmes caractéristiques en raison des hubs présents et qui réduisent les distances entre les nœuds, les résultats de nos 
 tests montrent une légère différence.
-Le coefficient de clustering est lui estimé théoriquement à 0,0005 ce qui est supérieur à ce qu'on trouve
-en pratique.
+Le coefficient de clustering est lui estimé théoriquement à 0,0005 et c'est du même ordre des résultats obtenus en pratique.
 
 Si on compare avec les mesures du réseau réel, on remarque qu'on retrouve les propriétés vu en cours les réseaux réels ont un coefficient de clustering relativement élevé.
 
 
-# Propagation dans les réseaux d'interaction
+# Propagation dans les réseaux d'interactions
 
 ### Question 1
-- Taux de propagation dans le réseau étudié $`\lambda = 2.142857142857143`$ 
+- Taux de propagation dans le réseau étudié $`\lambda = 2.142`$ 
 
 - Seuil épidémique :
         
   La formule permettant de le trouver est la suivante : $`\lambda_{c} = \frac{\lt k\gt }{\lt k^{2}\gt }`$
-  On obtient alors pour notre réseau réel : $`\lambda_{c} = 0.04598472436222584`$
+  On obtient alors pour notre réseau réel : $`\lambda_{c} = 0.045`$
 
 - Seuil épidémique théorique pour un réseau aléatoire de même degré moyen :
   $`\lambda_{c}  = \frac{1}{\lt k\gt +1}`$
   
-  $`\lambda_{c}  = 0.13119762993051035`$
+  $`\lambda_{c}  = 0.131`$
   
 Dans notre réseau réel, le seuil épidémique est nettement inférieur au seuil théorique calculé pour un 
 réseau aléatoire, de même degré moyen. Cela indique que le réseau réel est plus vulnérable à la propagation
@@ -146,6 +180,7 @@ de virus que le réseau aléatoire, cela s'explique par l'existence de hubs (qui
   
 ### Question 2
 ##### Évolution de la fraction d'inféctés de la population non immunisée pour les trois scénarios
+
 ![fraction d'inféctés réseau réel](tp_propagation/dataPropagation/scenario123.png)
 
 - **Scénario 1 :** c'est vraisemblablement le pire, comme on pouvait s'en douter. La propagation du virus est rapide et il touche un nombre considérable d'individus.
@@ -176,32 +211,46 @@ la propagation du virus n'est pas ralentie.
 
 ### Question 5
 
-#### Comparaisons
+#### Réseau Aléatoire
+- Degré moyen du groupe 0 : 6.630
+- Degré moyen du groupe 1 : 7.628
+- Seuil épidémique du réseau modifié suite à l'immunisation aléatoire : 0.131
+- Seuil épidémique du réseau modifié suite à l'immunisation séléctive : 0.139
+
+
+#### Réseau Barabasi-Albert
+- Degré moyen du groupe 0 : 7.005
+- Degré moyen du groupe 1 : 37.139
+- Seuil épidémique du réseau modifié suite à l'immunisation aléatoire : 0.034
+- Seuil épidémique du réseau modifié suite à l'immunisation séléctive : 0.135
+
+
+#### Comparaison des trois réseaux
 
 ##### Scénario 1
 ![comparaison scenario1](tp_propagation/dataPropagation/S1/comp_scenario1.png)
 
 Le nombre d'inféctés atteint un nombre de grandeur similaire pour 
 chacun des réseaux, on remarque cependant une propagation plus rapide 
-dans le réseau de collaboration. 
-Les courbes du réseau aléatoire et réseau Barabasi-Albert évoluent de
-la même manière.
-
+dans le réseau de collaboration et le réseau suivant la méthode 
+d'attachement préférentiel, surement en raison de la présence de hubs. 
 
 ##### Scénario 2
 ![comparaison scenario2](tp_propagation/dataPropagation/S2/comp_scenario2.png)
 
 Le nombre d'inféctés est moins important que lors du scénario 1,
-la propagation est toujours plus lente du côté du réseau aléatoire 
-et celui de Barabasi-Albert, mais le nombre d'infécté est supérieur 
-pour ces deux réseaux que dans le réseau de collaboration. 
+la propagation est toujours plus lente du côté du réseau aléatoire, 
+on retrouve ensuite le réseau de collaboration suivit de près par le réseau Barabasi-Albert.
 
 ##### Scénario 3
 ![comparaison scenario3](tp_propagation/dataPropagation/S3/comp_scenario3.png)
 
-Nous pouvons enfin observer une légère différence entre le réseau 
-aléatoire et le réseau de Barabasi-Albert dans la vitesse de 
-propagation. 
+le réseau de Barabasi-Albert enfin une différence plus prononcée dans la vitesse de 
+propagation.
 L'écart avec le nombre maximal d'inféctés dans le réseau de 
-collaboration se creuse d'autant plus, il y en a environ trois fois 
+collaboration se creuse d'autant plus, il y en a environ deux à trois fois 
 plus dans les deux autres réseaux.
+
+
+On remarque que le réseau aléatoire présente un nombre d'inféctés supérieur aux autres dans tous les scénarios.
+
