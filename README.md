@@ -144,7 +144,7 @@ Les résultats confirment bien ce qu'on a vu en cours, dans un réseau aléatoir
 ![distribution des degrés dans réseau barabasi log-log](tp1_mesures/data/degreeDistBarabasi.png)
 ![distribution des degrés dans réseau barabasi lin](tp1_mesures/data/linBarabasidegree.png)
 
-La distribution correspond bien aux prédictions théoriques, elle suit une loi puissance avec une 
+La distribution correspond bien aux prédictions théoriques, elle suit une loi puissance.
 
 ##### Distribution des distances
 ![distribution des distances dans réseau barabasi](tp1_mesures/data/distanceHistoBarabasi.png)
