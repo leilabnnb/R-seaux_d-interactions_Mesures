@@ -230,7 +230,7 @@ la propagation du virus n'est pas ralentie.
 ##### Scénario 1
 ![comparaison scenario1](tp_propagation/dataPropagation/S1/comp_scenario1.png)
 
-Le nombre d'inféctés atteint un nombre de grandeur similaire pour 
+Le nombre d'inféctés atteint un ordre de grandeur similaire pour 
 chacun des réseaux, on remarque cependant une propagation plus rapide 
 dans le réseau de collaboration et le réseau suivant la méthode 
 d'attachement préférentiel, surement en raison de la présence de hubs. 
@@ -245,7 +245,7 @@ on retrouve ensuite le réseau de collaboration suivit de près par le réseau B
 ##### Scénario 3
 ![comparaison scenario3](tp_propagation/dataPropagation/S3/comp_scenario3.png)
 
-le réseau de Barabasi-Albert enfin une différence plus prononcée dans la vitesse de 
+Le réseau de Barabasi-Albert enfin une différence plus prononcée dans la vitesse de 
 propagation.
 L'écart avec le nombre maximal d'inféctés dans le réseau de 
 collaboration se creuse d'autant plus, il y en a environ deux à trois fois 
